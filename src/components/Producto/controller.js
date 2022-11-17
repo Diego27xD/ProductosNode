@@ -71,7 +71,8 @@ export const update = async (req, res) => {
             const file = req.files.foto_edit;
             const producto = await Producto.findById(id)
             const keyImage = producto.imagen.split('/')[3]
-            await deleteObject(keyImage)
+            let params = {  Bucket: 's3-photosdf', Key: keyImage };
+            await deleteObject(params)
             const result = await uploadToBucket(file)
             const imageUpdate = await result.Location
             dataUpdate.imagen = imageUpdate
@@ -108,7 +109,9 @@ export const destroy = async (req, res) => {
         const producto = await Producto.findById(id)
         
         const keyImage = producto.imagen.split('/')[3]
-        await deleteObject(keyImage)
+        let params = {  Bucket: 's3-photosdf', Key: keyImage };
+        await deleteObject(params)
+        
 
         await Producto.findByIdAndDelete(id)
 

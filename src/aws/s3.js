@@ -28,12 +28,12 @@ export const uploadToBucket = (file) => {
     return storage.upload(params).promise();
 }
 
-export const deleteObject = async(keyObject) => {
-    try {
-        const params = { Bucket:nameBucket, Key:keyObject }
-        await storage.deleteObject(params).promise()
-        console.log('Eliminado correctamente')
-    } catch (error) {
-        console.log(error)
-    }
+export const deleteObject = (params) => {
+    storage.deleteObject(params, function(err, data){
+        if(err){
+            console.log(err, err.stack);  // error
+        }else{
+            console.log('Eliminado correctamente');
+        } 
+    })
 }
